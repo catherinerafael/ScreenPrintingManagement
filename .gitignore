@@ -26,3 +26,5 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+*.log
+build_error.log
