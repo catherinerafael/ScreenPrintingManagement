@@ -15,9 +15,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('customer')
+        $orders = Order::with('user')
             ->latest()
             ->paginate(10);
+
+        $orders->getCollection()->transform(function ($order) {
+            $order->customer = [
+                'name' => $order->customer_name,
+                'email' => $order->customer_email,
+                'phone' => $order->customer_phone,
+            ];
+            return $order;
+        });
 
         return Inertia::render('admin/orders/Index', [
             'orders' => $orders
@@ -29,7 +38,13 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::with(['customer', 'items.product', 'invoices'])->findOrFail($id);
+        $order = Order::with(['user', 'items.product', 'invoices'])->findOrFail($id);
+        
+        $order->customer = [
+            'name' => $order->customer_name,
+            'email' => $order->customer_email,
+            'phone' => $order->customer_phone,
+        ];
 
         return Inertia::render('admin/orders/Show', [
             'order' => $order

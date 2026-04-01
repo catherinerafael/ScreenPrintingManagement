@@ -7,7 +7,6 @@ import {
   IconSettings,
   IconShirt,
   IconUsers,
-  IconPalette
 } from "@tabler/icons-react"
 import { Link, usePage } from "@inertiajs/react"
 
@@ -53,8 +52,6 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
       title: "Master Data Produksi",
       items: [
         { title: "Katalog Produk", url: "/admin/products", icon: IconShirt },
-        { title: "Bahan Material", url: "/admin/materials", icon: IconPalette },
-        { title: "Metode Cetak", url: "/admin/print-methods", icon: IconPrinter },
       ]
     },
     {

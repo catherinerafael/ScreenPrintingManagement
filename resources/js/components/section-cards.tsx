@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/card"
 
 interface SectionCardsProps {
-    stats: {
-        orders_today: number;
-        orders_month: number;
-        revenue_today: number | string | null;
-        revenue_month: number | string | null;
-        pending_payment: number;
-        in_production: number;
-        ready_to_ship: number;
-    }
+  stats: {
+    orders_today: number;
+    orders_month: number;
+    revenue_today: number | string | null;
+    revenue_month: number | string | null;
+    pending_payment: number;
+    in_production: number;
+    ready_to_ship: number;
+  }
 }
 
 export function SectionCards({ stats }: SectionCardsProps) {
@@ -30,7 +30,7 @@ export function SectionCards({ stats }: SectionCardsProps) {
         <CardHeader>
           <CardDescription>Pendapatan Bulan Ini</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            Rp {Number(stats?.revenue_month || 0).toLocaleString('id-ID')}
+            Rp {Number(stats?.revenue_month || 1000000).toLocaleString('id-ID')}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">

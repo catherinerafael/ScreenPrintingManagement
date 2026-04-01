@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { AdminSidebar } from '@/components/admin-sidebar';
 import {
   SidebarInset,
@@ -15,6 +15,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface BreadcrumbItemType {
     title: string;
@@ -27,7 +30,16 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutProps) {
+    const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props;
+
+    React.useEffect(() => {
+        if (flash?.success) toast.success(flash.success);
+        if (flash?.error) toast.error(flash.error);
+    }, [flash]);
+
     return (
+        <>
+        <Toaster position="top-right" richColors />
         <SidebarProvider
             style={
                 {
@@ -42,7 +54,7 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutP
                 <header className="flex h-[var(--header-height)] shrink-0 items-center gap-2 border-b px-4 lg:px-6">
                     <SidebarTrigger className="-ml-1" />
                     <Separator orientation="vertical" className="mr-2 h-4" />
-                    <Breadcrumb>
+                    <Breadcrumb className="flex-1">
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
                                 <BreadcrumbLink asChild>
@@ -73,6 +85,9 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutP
                             })}
                         </BreadcrumbList>
                     </Breadcrumb>
+                    <div className="ml-auto">
+                        <ThemeToggle />
+                    </div>
                 </header>
 
                 <div className="flex flex-1 flex-col">
@@ -80,5 +95,6 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutP
                 </div>
             </SidebarInset>
         </SidebarProvider>
+        </>
     );
 }
